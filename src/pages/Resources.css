@@ -1,0 +1,54 @@
+.resources-page,
+.crisis-support-page,
+.professionals-page {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+  padding: 2rem 0;
+}
+
+.resources-container,
+.crisis-container,
+.professionals-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 2rem;
+  text-align: center;
+}
+
+.resources-container h1,
+.crisis-container h1,
+.professionals-container h1 {
+  font-size: 2.2rem;
+  color: #2d3748;
+  margin-bottom: 1rem;
+}
+
+.resources-container p,
+.crisis-container p,
+.professionals-container p {
+  color: #4a5568;
+  font-size: 1.1rem;
+  margin-bottom: 3rem;
+}
+
+.coming-soon {
+  background: white;
+  border-radius: 12px;
+  padding: 4rem 2rem;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.coming-soon-icon {
+  font-size: 4rem;
+  margin-bottom: 1rem;
+}
+
+.coming-soon h2 {
+  color: #2d3748;
+  margin-bottom: 1rem;
+}
+
+.coming-soon p {
+  color: #4a5568;
+  margin: 0;
+}
