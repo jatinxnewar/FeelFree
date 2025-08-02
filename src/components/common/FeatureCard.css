@@ -1,177 +1,196 @@
-/* Feature Card Styles */
+/* Feature Card - Minimal & Responsive */
 .feature-card {
-  background: white;
-  border-radius: 16px;
-  padding: 2rem;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-  transition: all 0.3s ease;
-  border-top: 4px solid var(--accent-color, #667eea);
+  background: var(--card);
+  border-radius: var(--radius-lg);
+  padding: var(--spacing-xl);
+  box-shadow: var(--shadow-sm);
+  transition: all var(--transition-normal);
+  border: 1px solid var(--gray-200);
   position: relative;
   overflow: hidden;
-}
-
-.feature-card::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 4px;
-  background: linear-gradient(90deg, var(--accent-color, #667eea), transparent);
-  transition: all 0.3s ease;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
 }
 
 .feature-card:hover {
-  transform: translateY(-8px);
-  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.15);
-}
-
-.feature-card:hover::before {
-  height: 100%;
-  opacity: 0.05;
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
+  border-color: var(--primary-300);
 }
 
 .feature-icon {
-  font-size: 3rem;
-  margin-bottom: 1.5rem;
-  display: inline-block;
-  animation: bounceIn 0.6s ease-out;
-}
-
-@keyframes bounceIn {
-  0% {
-    opacity: 0;
-    transform: scale(0.3);
-  }
-  50% {
-    opacity: 1;
-    transform: scale(1.05);
-  }
-  70% {
-    transform: scale(0.9);
-  }
-  100% {
-    opacity: 1;
-    transform: scale(1);
-  }
+  font-size: 2rem;
+  margin-bottom: var(--spacing-md);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 48px;
+  height: 48px;
+  background: var(--primary-50);
+  border-radius: var(--radius-lg);
+  color: var(--primary-600);
+  flex-shrink: 0;
 }
 
 .feature-content {
-  position: relative;
-  z-index: 1;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
 }
 
 .feature-title {
-  font-size: 1.4rem;
-  font-weight: 600;
-  color: #2d3748;
-  margin-bottom: 1rem;
-  line-height: 1.3;
+  font-size: var(--font-size-lg);
+  font-weight: var(--font-weight-semibold);
+  color: var(--foreground);
+  margin-bottom: var(--spacing-sm);
+  line-height: var(--line-height-tight);
 }
 
 .feature-description {
-  color: #4a5568;
-  font-size: 1rem;
-  line-height: 1.6;
-  margin-bottom: 1.5rem;
+  color: var(--muted-foreground);
+  font-size: var(--font-size-sm);
+  line-height: var(--line-height-relaxed);
+  margin-bottom: var(--spacing-md);
+  flex: 1;
 }
 
 .feature-link {
   display: inline-flex;
   align-items: center;
-  gap: 0.5rem;
-  color: var(--accent-color, #667eea);
+  gap: var(--spacing-xs);
+  color: var(--primary-600);
   text-decoration: none;
-  font-weight: 600;
-  font-size: 1rem;
-  transition: all 0.3s ease;
-  padding: 0.5rem 0;
+  font-weight: var(--font-weight-medium);
+  font-size: var(--font-size-sm);
+  transition: all var(--transition-fast);
+  padding: var(--spacing-xs) 0;
+  margin-top: auto;
 }
 
 .feature-link:hover {
-  color: #5a67d8;
-  gap: 0.75rem;
+  color: var(--primary-700);
+  gap: var(--spacing-sm);
+  text-decoration: none;
 }
 
-.arrow {
-  transition: transform 0.3s ease;
-  font-size: 1.2rem;
+.feature-link svg {
+  width: 16px;
+  height: 16px;
+  transition: transform var(--transition-fast);
 }
 
-.feature-link:hover .arrow {
-  transform: translateX(4px);
+.feature-link:hover svg {
+  transform: translateX(2px);
 }
 
-/* Animation on scroll */
-.feature-card {
-  opacity: 0;
-  transform: translateY(20px);
-  animation: fadeInUp 0.6s ease-out forwards;
-}
-
-@keyframes fadeInUp {
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-/* Dark Theme */
-.dark-theme .feature-card {
-  background: #2d3748;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
-}
-
-.dark-theme .feature-card:hover {
-  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.4);
-}
-
-.dark-theme .feature-title {
-  color: #e2e8f0;
-}
-
-.dark-theme .feature-description {
-  color: #cbd5e0;
-}
-
-/* Responsive Design */
-@media (max-width: 768px) {
+/* Responsive Design - Mobile First */
+@media (max-width: 575px) {
   .feature-card {
-    padding: 1.5rem;
+    padding: var(--spacing-lg);
   }
 
   .feature-icon {
-    font-size: 2.5rem;
-    margin-bottom: 1rem;
+    width: 40px;
+    height: 40px;
+    font-size: 1.5rem;
+    margin-bottom: var(--spacing-sm);
   }
 
   .feature-title {
-    font-size: 1.2rem;
+    font-size: var(--font-size-base);
   }
 
   .feature-description {
-    font-size: 0.95rem;
+    font-size: var(--font-size-xs);
+    margin-bottom: var(--spacing-sm);
   }
 
   .feature-link {
-    font-size: 0.95rem;
+    font-size: var(--font-size-xs);
   }
 }
 
-@media (max-width: 480px) {
+@media (min-width: 576px) and (max-width: 767px) {
   .feature-card {
-    padding: 1.25rem;
+    padding: var(--spacing-lg);
   }
 
   .feature-icon {
+    width: 44px;
+    height: 44px;
+    font-size: 1.75rem;
+  }
+}
+
+@media (min-width: 768px) {
+  .feature-card {
+    padding: var(--spacing-xl);
+  }
+
+  .feature-icon {
+    width: 48px;
+    height: 48px;
     font-size: 2rem;
+  }
+}
+
+@media (min-width: 1200px) {
+  .feature-card {
+    padding: calc(var(--spacing-xl) * 1.25);
   }
 
   .feature-title {
-    font-size: 1.1rem;
+    font-size: var(--font-size-xl);
   }
 
   .feature-description {
-    font-size: 0.9rem;
+    font-size: var(--font-size-base);
+  }
+}
+
+/* Dark mode support */
+@media (prefers-color-scheme: dark) {
+  .feature-card {
+    background: var(--gray-800);
+    border-color: var(--gray-700);
+  }
+
+  .feature-card:hover {
+    border-color: var(--primary-400);
+  }
+
+  .feature-icon {
+    background: rgba(100, 116, 139, 0.1);
+    color: var(--primary-400);
+  }
+
+  .feature-title {
+    color: var(--gray-100);
+  }
+
+  .feature-description {
+    color: var(--gray-300);
+  }
+
+  .feature-link {
+    color: var(--primary-400);
+  }
+
+  .feature-link:hover {
+    color: var(--primary-300);
+  }
+}
+
+/* Print styles */
+@media print {
+  .feature-card {
+    break-inside: avoid;
+    box-shadow: none;
+    border: 1px solid var(--gray-300);
+  }
+
+  .feature-card:hover {
+    transform: none;
   }
 }

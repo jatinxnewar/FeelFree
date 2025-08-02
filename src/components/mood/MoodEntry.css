@@ -1,77 +1,83 @@
-/* Mood Entry Styles */
+/* Mood Entry Styles - Minimal Design */
 .mood-entry-overlay {
   position: fixed;
   top: 0;
   left: 0;
   right: 0;
   bottom: 0;
-  background: rgba(0, 0, 0, 0.5);
+  background: rgba(0, 0, 0, 0.3);
   display: flex;
   align-items: center;
   justify-content: center;
-  z-index: 1000;
+  z-index: var(--z-modal);
+  backdrop-filter: blur(2px);
 }
 
 .mood-entry-modal {
-  background: white;
-  border-radius: 16px;
+  background: var(--card);
+  border-radius: var(--radius-xl);
   width: 90%;
   max-width: 600px;
   max-height: 90vh;
   overflow-y: auto;
-  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+  box-shadow: var(--shadow-xl);
+  border: 1px solid var(--border);
 }
 
 .mood-entry-container {
-  background: white;
-  border-radius: 12px;
-  padding: 2rem;
+  background: var(--card);
+  border-radius: var(--radius-lg);
+  padding: var(--spacing-xl);
 }
 
 .modal-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 1.5rem 2rem;
-  border-bottom: 1px solid #e2e8f0;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  padding: var(--spacing-lg) var(--spacing-xl);
+  border-bottom: 1px solid var(--border);
+  background: var(--primary-500);
   color: white;
-  border-radius: 16px 16px 0 0;
+  border-radius: var(--radius-xl) var(--radius-xl) 0 0;
 }
 
 .modal-header h2 {
   margin: 0;
-  font-size: 1.4rem;
+  font-size: var(--font-size-xl);
+  font-weight: var(--font-weight-semibold);
 }
 
 .close-btn {
   background: none;
   border: none;
   color: white;
-  font-size: 1.5rem;
+  font-size: var(--font-size-xl);
   cursor: pointer;
-  padding: 0.25rem;
-  border-radius: 4px;
+  padding: var(--spacing-sm);
+  border-radius: var(--radius-md);
+  transition: background-color var(--transition-fast);
 }
 
 .close-btn:hover {
-  background: rgba(255, 255, 255, 0.2);
+  background: rgba(255, 255, 255, 0.1);
 }
 
 .mood-entry-form {
-  padding: 2rem;
+  padding: var(--spacing-xl);
 }
 
 .mood-entry-content h2 {
-  color: #2d3748;
-  margin-bottom: 2rem;
+  color: var(--gray-800);
+  margin-bottom: var(--spacing-xl);
   text-align: center;
+  font-weight: var(--font-weight-medium);
 }
 
 .mood-entry-content h3 {
-  color: #2d3748;
-  margin-bottom: 1rem;
-  font-size: 1.1rem;
+  color: var(--gray-800);
+  margin-bottom: var(--spacing-md);
+  font-size: var(--font-size-lg);
+  font-weight: var(--font-weight-medium);
 }
 
 /* Mood Selection */
