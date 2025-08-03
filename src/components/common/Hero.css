@@ -1,0 +1,257 @@
+/* Hero Section - Minimal & Responsive */
+.hero {
+  background: linear-gradient(135deg, var(--gray-50) 0%, var(--primary-50) 100%);
+  padding: var(--spacing-3xl) 0;
+  min-height: 80vh;
+  display: flex;
+  align-items: center;
+}
+
+.hero-content {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--spacing-3xl);
+  align-items: center;
+  min-height: 400px;
+}
+
+.hero-text {
+  max-width: 500px;
+}
+
+.hero-title {
+  font-size: var(--font-size-4xl);
+  font-weight: var(--font-weight-bold);
+  color: var(--foreground);
+  margin-bottom: var(--spacing-lg);
+  line-height: var(--line-height-tight);
+  letter-spacing: -0.025em;
+}
+
+.hero-description {
+  font-size: var(--font-size-lg);
+  color: var(--muted-foreground);
+  margin-bottom: var(--spacing-xl);
+  line-height: var(--line-height-relaxed);
+}
+
+.hero-actions {
+  display: flex;
+  gap: var(--spacing-md);
+  flex-wrap: wrap;
+}
+
+.hero-visual {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.hero-card {
+  background: var(--card);
+  border: 1px solid var(--gray-200);
+  border-radius: var(--radius-xl);
+  padding: var(--spacing-xl);
+  box-shadow: var(--shadow-lg);
+  transform: rotate(-2deg);
+  transition: transform var(--transition-normal);
+}
+
+.hero-card:hover {
+  transform: rotate(0deg) scale(1.05);
+}
+
+.mood-preview {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-md);
+}
+
+.mood-icon {
+  font-size: 3rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 64px;
+  height: 64px;
+  background: var(--primary-50);
+  border-radius: var(--radius-full);
+}
+
+.mood-text {
+  font-size: var(--font-size-lg);
+  font-weight: var(--font-weight-medium);
+  color: var(--foreground);
+}
+
+/* Responsive Design - Mobile First */
+@media (max-width: 575px) {
+  .hero {
+    padding: var(--spacing-2xl) 0;
+    min-height: 60vh;
+  }
+
+  .hero-content {
+    grid-template-columns: 1fr;
+    gap: var(--spacing-xl);
+    text-align: center;
+    min-height: auto;
+  }
+
+  .hero-text {
+    max-width: none;
+    order: 1;
+  }
+
+  .hero-visual {
+    order: 2;
+  }
+
+  .hero-title {
+    font-size: var(--font-size-2xl);
+  }
+
+  .hero-description {
+    font-size: var(--font-size-base);
+  }
+
+  .hero-actions {
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .hero-actions .btn {
+    width: 100%;
+    max-width: 280px;
+  }
+
+  .hero-card {
+    transform: rotate(0deg);
+    padding: var(--spacing-lg);
+  }
+
+  .mood-icon {
+    width: 48px;
+    height: 48px;
+    font-size: 2rem;
+  }
+
+  .mood-text {
+    font-size: var(--font-size-base);
+  }
+}
+
+@media (min-width: 576px) and (max-width: 767px) {
+  .hero {
+    min-height: 70vh;
+  }
+
+  .hero-content {
+    grid-template-columns: 1fr;
+    gap: var(--spacing-2xl);
+    text-align: center;
+  }
+
+  .hero-title {
+    font-size: var(--font-size-3xl);
+  }
+
+  .hero-actions {
+    justify-content: center;
+  }
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+  .hero-content {
+    gap: var(--spacing-2xl);
+  }
+
+  .hero-title {
+    font-size: var(--font-size-3xl);
+  }
+}
+
+@media (min-width: 992px) {
+  .hero {
+    padding: calc(var(--spacing-3xl) * 1.5) 0;
+  }
+
+  .hero-title {
+    font-size: var(--font-size-5xl);
+  }
+
+  .hero-description {
+    font-size: var(--font-size-xl);
+  }
+}
+
+@media (min-width: 1200px) {
+  .hero-content {
+    gap: var(--spacing-3xl);
+  }
+
+  .hero-text {
+    max-width: 600px;
+  }
+}
+
+/* Dark mode support */
+@media (prefers-color-scheme: dark) {
+  .hero {
+    background: linear-gradient(135deg, var(--gray-900) 0%, var(--gray-800) 100%);
+  }
+
+  .hero-title {
+    color: var(--gray-100);
+  }
+
+  .hero-description {
+    color: var(--gray-300);
+  }
+
+  .hero-card {
+    background: var(--gray-800);
+    border-color: var(--gray-700);
+  }
+
+  .mood-icon {
+    background: rgba(100, 116, 139, 0.2);
+  }
+
+  .mood-text {
+    color: var(--gray-100);
+  }
+}
+
+/* Animation */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.hero-text {
+  animation: fadeInUp 0.8s ease-out;
+}
+
+.hero-visual {
+  animation: fadeInUp 0.8s ease-out 0.2s both;
+}
+
+/* Disable animations for reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  .hero-text,
+  .hero-visual {
+    animation: none;
+  }
+
+  .hero-card:hover {
+    transform: none;
+  }
+}
