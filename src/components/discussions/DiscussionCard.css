@@ -138,6 +138,16 @@
   background: #fed7d7;
 }
 
+.bookmark-btn.bookmarked {
+  color: #d69e2e;
+  background: #fef5e7;
+}
+
+.bookmark-btn.bookmarked:hover {
+  background: #faf089;
+  color: #b7791f;
+}
+
 .action-icon {
   font-size: 1.1rem;
 }

@@ -45,6 +45,36 @@ function DiscussionCard({ discussion }) {
     }
   }
 
+  const handleBookmark = () => {
+    const updatedDiscussion = {
+      ...discussion,
+      isBookmarked: !discussion.isBookmarked
+    }
+    
+    actions.updateDiscussion(updatedDiscussion)
+    
+    // Add to favorites if bookmarked
+    if (!discussion.isBookmarked) {
+      actions.addToFavorites({
+        id: discussion.id,
+        type: 'discussion',
+        title: discussion.title,
+        content: discussion.content.substring(0, 100) + '...',
+        savedAt: new Date().toISOString()
+      })
+      
+      actions.addNotification({
+        type: 'success',
+        message: 'Discussion bookmarked! Check your saved items.'
+      })
+    } else {
+      actions.addNotification({
+        type: 'info',
+        message: 'Bookmark removed from saved items.'
+      })
+    }
+  }
+
   const formatTimeAgo = (dateString) => {
     const now = new Date()
     const date = new Date(dateString)
@@ -117,6 +147,15 @@ function DiscussionCard({ discussion }) {
         >
           <span className="action-icon">💬</span>
           <span className="action-count">{discussion.replies?.length || 0}</span>
+        </button>
+
+        <button 
+          className={`action-btn bookmark-btn ${discussion.isBookmarked ? 'bookmarked' : ''}`}
+          onClick={handleBookmark}
+          title={discussion.isBookmarked ? 'Remove bookmark' : 'Bookmark this discussion'}
+        >
+          <span className="action-icon">{discussion.isBookmarked ? '🔖' : '📝'}</span>
+          <span className="action-text">{discussion.isBookmarked ? 'Saved' : 'Save'}</span>
         </button>
 
         <button 
