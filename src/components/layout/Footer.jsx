@@ -1,8 +1,47 @@
 import { Link } from 'react-router-dom'
+import { useState } from 'react'
+import { useApp } from '../../context/AppContext'
 import './Footer.css'
 
 function Footer() {
+  const { actions } = useApp()
+  const [quickMood, setQuickMood] = useState('')
+  const [showQuickMood, setShowQuickMood] = useState(false)
+  const [submitted, setSubmitted] = useState(false)
   const currentYear = new Date().getFullYear()
+
+  const quickMoodOptions = [
+    { value: 'great', emoji: '😄', label: 'Great' },
+    { value: 'good', emoji: '😊', label: 'Good' },
+    { value: 'okay', emoji: '😐', label: 'Okay' },
+    { value: 'sad', emoji: '😔', label: 'Sad' },
+    { value: 'stressed', emoji: '😰', label: 'Stressed' }
+  ]
+
+  const handleQuickMoodSubmit = () => {
+    if (quickMood) {
+      const moodEntry = {
+        id: Date.now(),
+        mood: quickMood,
+        date: new Date().toISOString(),
+        source: 'quick-checkin',
+        timestamp: new Date().toLocaleTimeString()
+      }
+      
+      actions.addMoodEntry(moodEntry)
+      actions.addNotification({
+        type: 'success',
+        message: '✅ Quick mood check-in saved! Thank you for sharing.'
+      })
+      
+      setSubmitted(true)
+      setTimeout(() => {
+        setShowQuickMood(false)
+        setSubmitted(false)
+        setQuickMood('')
+      }, 2000)
+    }
+  }
 
   const footerLinks = {
     support: [
@@ -34,6 +73,62 @@ function Footer() {
   return (
     <footer className="footer">
       <div className="footer-content">
+        {/* Quick Mood Check-in Widget */}
+        <div className="quick-mood-widget">
+          {!showQuickMood ? (
+            <button 
+              className="quick-mood-trigger"
+              onClick={() => setShowQuickMood(true)}
+              aria-label="Quick mood check-in"
+            >
+              <span className="mood-icon">💭</span>
+              <span className="mood-text">How are you feeling?</span>
+              <span className="mood-arrow">→</span>
+            </button>
+          ) : (
+            <div className="quick-mood-form">
+              {!submitted ? (
+                <>
+                  <div className="quick-mood-header">
+                    <span>Quick check-in: How do you feel right now?</span>
+                    <button 
+                      className="close-quick-mood"
+                      onClick={() => setShowQuickMood(false)}
+                      aria-label="Close quick mood check-in"
+                    >
+                      ✕
+                    </button>
+                  </div>
+                  <div className="quick-mood-options">
+                    {quickMoodOptions.map((option) => (
+                      <button
+                        key={option.value}
+                        className={`quick-mood-btn ${quickMood === option.value ? 'selected' : ''}`}
+                        onClick={() => setQuickMood(option.value)}
+                      >
+                        <span className="mood-emoji">{option.emoji}</span>
+                        <span className="mood-label">{option.label}</span>
+                      </button>
+                    ))}
+                  </div>
+                  <button 
+                    className="submit-quick-mood"
+                    onClick={handleQuickMoodSubmit}
+                    disabled={!quickMood}
+                  >
+                    Save Check-in
+                  </button>
+                </>
+              ) : (
+                <div className="quick-mood-success">
+                  <span className="success-icon">✅</span>
+                  <span>Thank you for checking in!</span>
+                </div>
+              )}
+            </div>
+          )}
+        </div>
+
         {/* Emergency Banner */}
         <div className="emergency-banner">
           <div className="emergency-icon">🆘</div>
