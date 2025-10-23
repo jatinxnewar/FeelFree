@@ -1,0 +1,404 @@
+.crisis-hotlines {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.hotlines-header {
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+.hotlines-header h2 {
+  color: #333;
+  font-size: 2.2rem;
+  margin-bottom: 15px;
+}
+
+.hotlines-header p {
+  color: #666;
+  font-size: 1.1rem;
+  max-width: 600px;
+  margin: 0 auto;
+  line-height: 1.6;
+}
+
+/* Search and Filter Controls */
+.hotlines-controls {
+  background: white;
+  border-radius: 12px;
+  padding: 25px;
+  margin-bottom: 25px;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+}
+
+.controls-row {
+  display: grid;
+  grid-template-columns: 1fr 200px;
+  gap: 20px;
+  align-items: end;
+}
+
+.search-group {
+  display: flex;
+  flex-direction: column;
+}
+
+.search-group label {
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 8px;
+}
+
+.search-input {
+  padding: 12px 15px;
+  border: 2px solid #e0e0e0;
+  border-radius: 8px;
+  font-size: 1rem;
+  transition: all 0.3s ease;
+}
+
+.search-input:focus {
+  outline: none;
+  border-color: #667eea;
+  box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+}
+
+.country-select {
+  padding: 12px 15px;
+  border: 2px solid #e0e0e0;
+  border-radius: 8px;
+  font-size: 1rem;
+  background: white;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.country-select:focus {
+  outline: none;
+  border-color: #667eea;
+  box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+}
+
+/* Hotlines Grid */
+.hotlines-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+  gap: 20px;
+  margin-top: 20px;
+}
+
+.hotline-card {
+  background: white;
+  border-radius: 15px;
+  padding: 25px;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+  transition: all 0.3s ease;
+  border-left: 5px solid #667eea;
+  position: relative;
+  overflow: hidden;
+}
+
+.hotline-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+}
+
+.hotline-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, #667eea, #764ba2);
+}
+
+.hotline-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 15px;
+}
+
+.hotline-name {
+  font-size: 1.3rem;
+  font-weight: bold;
+  color: #333;
+  margin: 0;
+  flex: 1;
+}
+
+.country-flag {
+  font-size: 1.5rem;
+  margin-left: 10px;
+}
+
+.hotline-country {
+  color: #667eea;
+  font-weight: 600;
+  margin-bottom: 10px;
+  font-size: 0.95rem;
+}
+
+.hotline-description {
+  color: #666;
+  line-height: 1.5;
+  margin-bottom: 20px;
+}
+
+.hotline-contact {
+  border-top: 1px solid #f0f0f0;
+  padding-top: 15px;
+}
+
+.contact-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 10px;
+  padding: 10px 0;
+}
+
+.contact-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.contact-type {
+  font-size: 0.9rem;
+  color: #888;
+  margin-bottom: 2px;
+}
+
+.contact-value {
+  font-weight: 600;
+  color: #333;
+  font-size: 1.1rem;
+}
+
+.contact-button {
+  background: linear-gradient(45deg, #667eea, #764ba2);
+  color: white;
+  border: none;
+  padding: 8px 15px;
+  border-radius: 20px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: all 0.3s ease;
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 0.9rem;
+}
+
+.contact-button:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+}
+
+.contact-button:active {
+  transform: translateY(0);
+}
+
+.contact-button.call {
+  background: linear-gradient(45deg, #4caf50, #45a049);
+}
+
+.contact-button.text {
+  background: linear-gradient(45deg, #2196f3, #1976d2);
+}
+
+/* Hours and Additional Info */
+.hotline-hours {
+  background: #f8f9ff;
+  border-radius: 8px;
+  padding: 12px;
+  margin-top: 15px;
+  border-left: 3px solid #667eea;
+}
+
+.hours-label {
+  font-weight: 600;
+  color: #667eea;
+  margin-bottom: 5px;
+  font-size: 0.9rem;
+}
+
+.hours-text {
+  color: #555;
+  font-size: 0.9rem;
+}
+
+.hotline-languages {
+  margin-top: 10px;
+}
+
+.languages-label {
+  font-weight: 600;
+  color: #667eea;
+  margin-bottom: 5px;
+  font-size: 0.9rem;
+}
+
+.languages-list {
+  color: #555;
+  font-size: 0.9rem;
+}
+
+/* No Results Message */
+.no-results {
+  text-align: center;
+  padding: 40px 20px;
+  color: #666;
+}
+
+.no-results-icon {
+  font-size: 3rem;
+  margin-bottom: 15px;
+  opacity: 0.5;
+}
+
+.no-results h3 {
+  margin-bottom: 10px;
+  color: #333;
+}
+
+.no-results p {
+  margin-bottom: 20px;
+  line-height: 1.5;
+}
+
+.clear-filters-btn {
+  background: #667eea;
+  color: white;
+  border: none;
+  padding: 12px 25px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: all 0.3s ease;
+}
+
+.clear-filters-btn:hover {
+  background: #5a67d8;
+  transform: translateY(-1px);
+}
+
+/* Emergency Notice */
+.emergency-notice {
+  background: linear-gradient(45deg, #d32f2f, #f44336);
+  color: white;
+  padding: 20px;
+  border-radius: 12px;
+  margin-bottom: 25px;
+  text-align: center;
+  box-shadow: 0 4px 15px rgba(211, 47, 47, 0.3);
+}
+
+.emergency-notice h3 {
+  margin: 0 0 10px 0;
+  font-size: 1.3rem;
+}
+
+.emergency-notice p {
+  margin: 0;
+  opacity: 0.95;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .crisis-hotlines {
+    padding: 15px;
+  }
+  
+  .hotlines-header h2 {
+    font-size: 1.8rem;
+  }
+  
+  .controls-row {
+    grid-template-columns: 1fr;
+    gap: 15px;
+  }
+  
+  .hotlines-grid {
+    grid-template-columns: 1fr;
+    gap: 15px;
+  }
+  
+  .hotline-card {
+    padding: 20px;
+  }
+  
+  .hotline-header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  
+  .country-flag {
+    margin: 5px 0 0 0;
+  }
+  
+  .contact-item {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+  }
+  
+  .contact-button {
+    align-self: flex-start;
+  }
+}
+
+@media (max-width: 480px) {
+  .crisis-hotlines {
+    padding: 10px;
+  }
+  
+  .hotlines-controls {
+    padding: 15px;
+  }
+  
+  .hotline-card {
+    padding: 15px;
+  }
+  
+  .hotlines-header h2 {
+    font-size: 1.6rem;
+  }
+  
+  .emergency-notice {
+    padding: 15px;
+  }
+}
+
+/* Accessibility */
+.contact-button:focus {
+  outline: 2px solid #fff;
+  outline-offset: 2px;
+}
+
+.search-input:focus,
+.country-select:focus {
+  outline: none;
+  border-color: #667eea;
+  box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.2);
+}
+
+/* Print Styles */
+@media print {
+  .hotlines-controls {
+    display: none;
+  }
+  
+  .contact-button {
+    background: #333 !important;
+    color: white !important;
+  }
+  
+  .hotline-card {
+    break-inside: avoid;
+    margin-bottom: 20px;
+  }
+}
