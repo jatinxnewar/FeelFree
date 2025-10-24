@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { useApp } from '../../context/AppContext'
 import './CrisisHotlines.css'
 
@@ -6,6 +6,9 @@ function CrisisHotlines() {
   const { actions } = useApp()
   const [selectedCountry, setSelectedCountry] = useState('US')
   const [searchTerm, setSearchTerm] = useState('')
+  const [selectedSpecialty, setSelectedSpecialty] = useState('All')
+  const [favorites, setFavorites] = useState([])
+  const [showFavoritesOnly, setShowFavoritesOnly] = useState(false)
 
   const hotlinesByCountry = {
     US: [
@@ -161,6 +164,86 @@ function CrisisHotlines() {
         website: 'https://kidshelpline.com.au/',
         specialties: ['Youth Support', 'Online Counseling']
       }
+    ],
+    Germany: [
+      {
+        name: 'Telefonseelsorge',
+        number: '0800 111 0 111',
+        description: 'Free crisis counseling and emotional support',
+        availability: '24/7',
+        languages: ['German'],
+        website: 'https://www.telefonseelsorge.de/',
+        specialties: ['Crisis Counseling', 'Suicide Prevention']
+      },
+      {
+        name: 'Nummer gegen Kummer',
+        number: '116 111',
+        description: 'Support for children and young people',
+        availability: 'Mo-Sa 14-20, Mo/Mi/Do 10-12',
+        languages: ['German'],
+        website: 'https://www.nummergegenkummer.de/',
+        specialties: ['Youth Support', 'Family Issues']
+      }
+    ],
+    France: [
+      {
+        name: 'SOS Amitié',
+        number: '09 72 39 40 50',
+        description: 'Emotional support and suicide prevention',
+        availability: '24/7',
+        languages: ['French'],
+        website: 'https://www.sos-amitie.org/',
+        specialties: ['Suicide Prevention', 'Emotional Support']
+      },
+      {
+        name: 'Fil Santé Jeunes',
+        number: '0800 235 236',
+        description: 'Health and wellness support for young people',
+        availability: 'Daily 9-23',
+        languages: ['French'],
+        website: 'https://www.filsantejeunes.com/',
+        specialties: ['Youth Health', 'Mental Wellness']
+      }
+    ],
+    Japan: [
+      {
+        name: 'TELL Lifeline',
+        number: '03-5774-0992',
+        description: 'English-language crisis support in Japan',
+        availability: '24/7',
+        languages: ['English', 'Japanese'],
+        website: 'https://telljp.com/',
+        specialties: ['Crisis Support', 'Expatriate Services']
+      },
+      {
+        name: 'Inochi no Denwa',
+        number: '0570-783-556',
+        description: 'Suicide prevention and crisis counseling',
+        availability: '24/7',
+        languages: ['Japanese'],
+        website: 'https://www.inochinodenwa.org/',
+        specialties: ['Suicide Prevention', 'Crisis Counseling']
+      }
+    ],
+    India: [
+      {
+        name: 'AASRA',
+        number: '91-22-27546669',
+        description: 'Suicide prevention and crisis intervention',
+        availability: '24/7',
+        languages: ['Hindi', 'English'],
+        website: 'http://www.aasra.info/',
+        specialties: ['Suicide Prevention', 'Crisis Intervention']
+      },
+      {
+        name: 'Vandrevala Foundation',
+        number: '1860-2662-345',
+        description: 'Mental health support and counseling',
+        availability: '24/7',
+        languages: ['Hindi', 'English', 'Tamil', 'Telugu'],
+        website: 'https://www.vandrevalafoundation.com/',
+        specialties: ['Mental Health', 'Counseling']
+      }
     ]
   }
 
@@ -168,8 +251,77 @@ function CrisisHotlines() {
     { code: 'US', name: 'United States', flag: '🇺🇸' },
     { code: 'UK', name: 'United Kingdom', flag: '🇬🇧' },
     { code: 'Canada', name: 'Canada', flag: '🇨🇦' },
-    { code: 'Australia', name: 'Australia', flag: '🇦🇺' }
+    { code: 'Australia', name: 'Australia', flag: '🇦🇺' },
+    { code: 'Germany', name: 'Germany', flag: '🇩🇪' },
+    { code: 'France', name: 'France', flag: '🇫🇷' },
+    { code: 'Japan', name: 'Japan', flag: '🇯🇵' },
+    { code: 'India', name: 'India', flag: '🇮🇳' }
   ]
+
+  // Load favorites from localStorage on component mount
+  useEffect(() => {
+    const savedFavorites = localStorage.getItem('crisisHotlineFavorites')
+    if (savedFavorites) {
+      setFavorites(JSON.parse(savedFavorites))
+    }
+  }, [])
+
+  // Keyboard shortcuts
+  useEffect(() => {
+    const handleKeyDown = (e) => {
+      // Ctrl/Cmd + K to focus search
+      if ((e.ctrlKey || e.metaKey) && e.key === 'k') {
+        e.preventDefault()
+        document.querySelector('.search-input')?.focus()
+      }
+      // Ctrl/Cmd + F to toggle favorites
+      if ((e.ctrlKey || e.metaKey) && e.key === 'f') {
+        e.preventDefault()
+        setShowFavoritesOnly(!showFavoritesOnly)
+      }
+    }
+
+    document.addEventListener('keydown', handleKeyDown)
+    return () => document.removeEventListener('keydown', handleKeyDown)
+  }, [showFavoritesOnly])
+
+  // Save favorites to localStorage whenever it changes
+  useEffect(() => {
+    localStorage.setItem('crisisHotlineFavorites', JSON.stringify(favorites))
+  }, [favorites])
+
+  // Get all unique specialties for filtering
+  const getAllSpecialties = () => {
+    const specialties = new Set(['All'])
+    Object.values(hotlinesByCountry).flat().forEach(hotline => {
+      hotline.specialties.forEach(specialty => specialties.add(specialty))
+    })
+    return Array.from(specialties).sort()
+  }
+
+  const toggleFavorite = (hotline) => {
+    const hotlineId = `${selectedCountry}-${hotline.name}`
+    setFavorites(prev => {
+      if (prev.includes(hotlineId)) {
+        actions.addNotification({
+          type: 'info',
+          message: `Removed ${hotline.name} from favorites`
+        })
+        return prev.filter(id => id !== hotlineId)
+      } else {
+        actions.addNotification({
+          type: 'success',
+          message: `Added ${hotline.name} to favorites`
+        })
+        return [...prev, hotlineId]
+      }
+    })
+  }
+
+  const isFavorite = (hotline) => {
+    const hotlineId = `${selectedCountry}-${hotline.name}`
+    return favorites.includes(hotlineId)
+  }
 
   const handleCall = (hotline) => {
     const confirmMessage = hotline.isText 
@@ -190,13 +342,24 @@ function CrisisHotlines() {
     }
   }
 
-  const filteredHotlines = hotlinesByCountry[selectedCountry]?.filter(hotline =>
-    hotline.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    hotline.description.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    hotline.specialties.some(specialty => 
-      specialty.toLowerCase().includes(searchTerm.toLowerCase())
-    )
-  ) || []
+  const filteredHotlines = hotlinesByCountry[selectedCountry]?.filter(hotline => {
+    // Text search filter
+    const matchesSearch = searchTerm === '' || 
+      hotline.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      hotline.description.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      hotline.specialties.some(specialty => 
+        specialty.toLowerCase().includes(searchTerm.toLowerCase())
+      )
+    
+    // Specialty filter
+    const matchesSpecialty = selectedSpecialty === 'All' || 
+      hotline.specialties.includes(selectedSpecialty)
+    
+    // Favorites filter
+    const matchesFavorites = !showFavoritesOnly || isFavorite(hotline)
+    
+    return matchesSearch && matchesSpecialty && matchesFavorites
+  }) || []
 
   return (
     <div className="crisis-hotlines">
@@ -222,18 +385,83 @@ function CrisisHotlines() {
         </div>
       </div>
 
-      {/* Search Filter */}
+      {/* Search and Filter Controls */}
       <div className="search-section">
         <div className="search-box">
           <input
             type="text"
-            placeholder="Search hotlines by name, description, or specialty..."
+            placeholder="Search hotlines by name, description, or specialty... (Ctrl+K)"
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
             className="search-input"
+            aria-label="Search crisis hotlines"
           />
           <span className="search-icon">🔍</span>
         </div>
+        
+        <div className="filter-controls">
+          {/* Specialty Filter */}
+          <div className="filter-group">
+            <label htmlFor="specialty-filter">Filter by Specialty:</label>
+            <select
+              id="specialty-filter"
+              value={selectedSpecialty}
+              onChange={(e) => setSelectedSpecialty(e.target.value)}
+              className="specialty-filter"
+            >
+              {getAllSpecialties().map(specialty => (
+                <option key={specialty} value={specialty}>
+                  {specialty}
+                </option>
+              ))}
+            </select>
+          </div>
+
+          {/* Favorites Toggle */}
+          <div className="filter-group">
+            <button
+              className={`favorites-toggle ${showFavoritesOnly ? 'active' : ''}`}
+              onClick={() => setShowFavoritesOnly(!showFavoritesOnly)}
+              title={showFavoritesOnly ? 'Show all hotlines' : 'Show favorites only'}
+            >
+              <span className="star-icon">⭐</span>
+              <span>{showFavoritesOnly ? 'Show All' : 'Favorites Only'}</span>
+              {favorites.length > 0 && (
+                <span className="favorites-count">({favorites.length})</span>
+              )}
+            </button>
+          </div>
+
+          {/* Clear Filters */}
+          {(searchTerm || selectedSpecialty !== 'All' || showFavoritesOnly) && (
+            <button
+              className="clear-filters"
+              onClick={() => {
+                setSearchTerm('')
+                setSelectedSpecialty('All')
+                setShowFavoritesOnly(false)
+              }}
+            >
+              Clear Filters
+            </button>
+          )}
+        </div>
+      </div>
+
+      {/* Results Stats */}
+      <div className="results-stats">
+        <p>
+          Showing <strong>{filteredHotlines.length}</strong> of{' '}
+          <strong>{hotlinesByCountry[selectedCountry]?.length || 0}</strong> hotlines
+          {searchTerm && ` for "${searchTerm}"`}
+          {selectedSpecialty !== 'All' && ` in ${selectedSpecialty}`}
+          {showFavoritesOnly && ' (favorites only)'}
+        </p>
+        {filteredHotlines.length > 0 && (
+          <small className="keyboard-hint">
+            💡 Tip: Press Ctrl+K to search, Ctrl+F to toggle favorites
+          </small>
+        )}
       </div>
 
       {/* Hotlines List */}
@@ -253,8 +481,18 @@ function CrisisHotlines() {
                     {hotline.availability === '24/7' && <span className="badge available-badge">24/7</span>}
                   </div>
                 </div>
-                <div className="hotline-number">
-                  <span className="number-display">{hotline.number}</span>
+                <div className="hotline-header-actions">
+                  <button
+                    className={`favorite-btn ${isFavorite(hotline) ? 'favorited' : ''}`}
+                    onClick={() => toggleFavorite(hotline)}
+                    title={isFavorite(hotline) ? 'Remove from favorites' : 'Add to favorites'}
+                    aria-label={isFavorite(hotline) ? 'Remove from favorites' : 'Add to favorites'}
+                  >
+                    <span className="star-icon">{isFavorite(hotline) ? '⭐' : '☆'}</span>
+                  </button>
+                  <div className="hotline-number">
+                    <span className="number-display">{hotline.number}</span>
+                  </div>
                 </div>
               </div>
 
